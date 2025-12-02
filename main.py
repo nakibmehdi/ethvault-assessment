@@ -2,12 +2,12 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# In-memory storage
+# In-memory storage note will contains Dict of notes
 notes = []
-current_id = 1
+current_id = 1 #unique id
 
 
-# CREATE
+# Create note
 @app.route('/notes', methods=['POST'])
 def create_note():
     global current_id
@@ -24,13 +24,13 @@ def create_note():
     return jsonify(new_note), 201
 
 
-# READ ALL
+# get all notes
 @app.route('/notes', methods=['GET'])
 def get_notes():
     return jsonify(notes)
 
 
-# READ ONE
+# Get specific note
 @app.route('/notes/<int:note_id>', methods=['GET'])
 def get_note(note_id):
     note = next((n for n in notes if n["id"] == note_id), None)
@@ -39,7 +39,7 @@ def get_note(note_id):
     return jsonify(note)
 
 
-# UPDATE
+# Update note
 @app.route('/notes/<int:note_id>', methods=['PUT'])
 def update_note(note_id):
     note = next((n for n in notes if n["id"] == note_id), None)
@@ -53,7 +53,7 @@ def update_note(note_id):
     return jsonify(note)
 
 
-# DELETE
+# Delete note
 @app.route('/notes/<int:note_id>', methods=['DELETE'])
 def delete_note(note_id):
     global notes
